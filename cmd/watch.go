@@ -1,4 +1,4 @@
-// Copyright © 2017 NAME HERE <EMAIL ADDRESS>
+// Copyright ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ© 2017 NAME HERE <EMAIL ADDRESS>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import (
 
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/config"
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/controller"
+	"github.com/logicmonitor/k8s-collectorset-controller/pkg/jaeger"
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/server"
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/storage/inmem"
 	log "github.com/sirupsen/logrus"
@@ -42,6 +43,7 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			log.Fatalf("Failed to get config: %v", err)
 		}
+		lmjaeger.Initialise(collectorsetconfig)
 
 		// TODO: storage.Storage should define a Chan() func.
 		countChan := make(chan int, 1)

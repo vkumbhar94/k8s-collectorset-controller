@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/logicmonitor/k8s-collectorset-controller/api"
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/constants"
 	"github.com/logicmonitor/k8s-collectorset-controller/pkg/storage"
+	"github.com/opentracing/opentracing-go"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -38,7 +41,17 @@ func New(storage storage.Storage, count <-chan int) *Server {
 
 // Run starts the gRPC server.
 func (srv *Server) Run() {
-	s := grpc.NewServer()
+	tracer := opentracing.GlobalTracer()
+	s := grpc.NewServer(
+		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
+			// add opentracing stream interceptor to chain
+			grpc_opentracing.StreamServerInterceptor(grpc_opentracing.WithTracer(tracer)),
+		)),
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			// add opentracing unary interceptor to chain
+			grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(tracer)),
+		)),
+	)
 	go srv.listenForPolicyCountChanges()
 	healthpb.RegisterHealthServer(s, srv)
 	api.RegisterCollectorSetControllerServer(s, srv)
@@ -58,13 +71,23 @@ func (srv *Server) Run() {
 // CollectorID implements api.CollectorSetControllerServer. It returns the
 // next collector ID to use.
 func (srv Server) CollectorID(ctx context.Context, req *api.CollectorIDRequest) (*api.CollectorIDReply, error) {
-	return srv.enforcePolicy(req)
+	span, newctx := opentracing.StartSpanFromContext(ctx, "collector-id-req")
+	defer span.Finish()
+	return srv.enforcePolicy(newctx, span, req)
 }
 
-func (srv *Server) enforcePolicy(req *api.CollectorIDRequest) (*api.CollectorIDReply, error) {
+func (srv *Server) enforcePolicy(ctx context.Context, span opentracing.Span, req *api.CollectorIDRequest) (*api.CollectorIDReply, error) {
 	for policy := range srv.Storage.IterPolicies() {
 		if policy.Validated(req) {
-			return policy.DistributionStrategy.ID(req)
+			id, err := policy.DistributionStrategy.ID(req)
+			if err != nil {
+				span.LogKV("message", err.Error())
+				span.LogKV("error", true)
+			} else {
+				span.LogKV("message", id)
+				span.LogKV("event", "returning collector id")
+			}
+			return id, err
 		}
 	}
 
