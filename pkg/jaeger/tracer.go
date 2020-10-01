@@ -17,9 +17,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func Initialise(lmconf *config.Config) {
+var (
+	lmconf *config.Config
+)
+
+func Initialise(lconf *config.Config) {
+	lmconf = lconf
 	conf := readConf()
-	cl, _ := conf.InitGlobalTracer(lmconf.Account + "-csc")
+	cl, _ := conf.InitGlobalTracer("collectorset-controller")
 	shutdownHook(cl)
 }
 
@@ -86,6 +91,7 @@ func StartSpan(lctx *lmctx.LMContext, operationName string, options ...opentraci
 	lmSpanObj := &LMSpanObject{
 		Span: span.(*jaeger.Span),
 	}
+	lmSpanObj.SetTag("lm.account", lmconf.Account)
 	lctx.Set("span", lmSpanObj)
 	return lmSpanObj
 }

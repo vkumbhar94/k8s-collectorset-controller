@@ -71,7 +71,7 @@ func (srv *Server) Run() {
 // CollectorID implements api.CollectorSetControllerServer. It returns the
 // next collector ID to use.
 func (srv Server) CollectorID(ctx context.Context, req *api.CollectorIDRequest) (*api.CollectorIDReply, error) {
-	span, newctx := opentracing.StartSpanFromContext(ctx, "collector-id-req")
+	span, newctx := opentracing.StartSpanFromContext(ctx, "CollectorID")
 	defer span.Finish()
 	return srv.enforcePolicy(newctx, span, req)
 }
