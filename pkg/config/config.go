@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/constants"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/constants"
 	"gopkg.in/yaml.v2"
 )
 

@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/policy"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/policy"
 )
 
 // CollectorSetName is a type used for keys in a PolicyMap.

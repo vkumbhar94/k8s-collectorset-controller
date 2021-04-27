@@ -1,7 +1,7 @@
 package v1alpha1
 
 import (
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/distributor"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/distributor"
 	appsv1 "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

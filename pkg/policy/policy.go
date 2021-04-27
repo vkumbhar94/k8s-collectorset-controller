@@ -1,8 +1,8 @@
 package policy
 
 import (
-	"github.com/logicmonitor/k8s-collectorset-controller/api"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/distributor"
+	"github.com/vkumbhar94/k8s-collectorset-controller/api"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/distributor"
 )
 
 // Policy represents an algorithm used to decide which collectorset

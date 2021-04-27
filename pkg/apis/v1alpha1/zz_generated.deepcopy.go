@@ -5,7 +5,7 @@
 package v1alpha1
 
 import (
-	distributor "github.com/logicmonitor/k8s-collectorset-controller/pkg/distributor"
+	distributor "github.com/vkumbhar94/k8s-collectorset-controller/pkg/distributor"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
