@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	crv1alpha1 "github.com/logicmonitor/k8s-collectorset-controller/pkg/apis/v1alpha1"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/constants"
+	crv1alpha1 "github.com/vkumbhar94/k8s-collectorset-controller/pkg/apis/v1alpha1"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/constants"
 	"github.com/logicmonitor/lm-sdk-go/client"
 	"github.com/logicmonitor/lm-sdk-go/client/lm"
 	"github.com/logicmonitor/lm-sdk-go/models"

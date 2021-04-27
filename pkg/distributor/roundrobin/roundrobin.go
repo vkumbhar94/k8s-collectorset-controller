@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/logicmonitor/k8s-collectorset-controller/api"
+	"github.com/vkumbhar94/k8s-collectorset-controller/api"
 )
 
 // Distributor is a struct that implements the following interfaces:

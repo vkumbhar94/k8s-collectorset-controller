@@ -1,4 +1,4 @@
-module github.com/logicmonitor/k8s-collectorset-controller/v2
+module github.com/vkumbhar94/k8s-collectorset-controller/v2
 
 go 1.14
 

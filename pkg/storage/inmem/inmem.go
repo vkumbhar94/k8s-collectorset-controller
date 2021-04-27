@@ -3,8 +3,8 @@ package inmem
 import (
 	"sync"
 
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/policy"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/storage"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/policy"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/storage"
 )
 
 // PolicyMap is an in-memory data store that is used to cache CollectorSet

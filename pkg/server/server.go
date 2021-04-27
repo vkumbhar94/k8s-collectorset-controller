@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/logicmonitor/k8s-collectorset-controller/api"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/constants"
-	"github.com/logicmonitor/k8s-collectorset-controller/pkg/storage"
+	"github.com/vkumbhar94/k8s-collectorset-controller/api"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/constants"
+	"github.com/vkumbhar94/k8s-collectorset-controller/pkg/storage"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
